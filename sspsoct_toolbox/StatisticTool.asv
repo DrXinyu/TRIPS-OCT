@@ -1,0 +1,143 @@
+classdef StatisticTool < handle
+    %UNTITLED Summary of this class goes here
+    %   Detailed explanation goes here
+
+    properties
+        Property1
+    end
+
+    methods
+        function self = StatisticTool()
+
+        end
+
+        function [r,p,rci,b,bci] = bootstrapping_regression(self,os,od,B)
+            
+            N = length(os(:,1));
+            rset = zeros(1,B);
+            pset = zeros(1,B);
+            bset = zeros(1,B);
+            for sam_index = 1:B
+                sam_sub = randi(N,N,1);
+                set_os = os(sam_sub,:);
+                set_od = od(sam_sub,:);
+                sam_eye = randi(2,N,1);
+                sam_eye2 = [sam_eye sam_eye];
+                set = set_os;
+                set(sam_eye2==2) = set_od(sam_eye2==2);
+                [rset(sam_index),pset(sam_index),bset(sam_index)] = self.linear_regression(set);
+
+            end
+            r = median(rset);
+            p = median(pset);
+            b = median(bset);
+            rci(1) = quantile(rset,0.025);
+            rci(2) = quantile(rset,0.975);
+            bci(1) = quantile(bset,0.025);
+            bci(2) = quantile(bset,0.975);
+
+
+        end
+
+        function p = bootstrapping_compare(self,os,od,B)
+
+            ex = (isnan(os(:,1))&isnan(od(:,1)));
+            ex = [ex ex];
+            os(ex)=[];
+            od(ex)=[];
+            os = reshape(os,[],2);
+            od = reshape(od,[],2);
+            
+            N = length(os(:,1));
+            pset = zeros(1,B);
+            for sam_index = 1:B
+                sam_sub = randi(N,N,1);
+                set_os = os(sam_sub,:);
+                set_od = od(sam_sub,:);
+                sam_eye = randi(2,N,1);
+                sam_eye2 = [sam_eye sam_eye];
+                set = set_os;
+                set(sam_eye2==2) = set_od(sam_eye2==2);
+                myopia = set(:,2)>=1;
+                value = set(:,1);
+                group1 = value(myopia);
+                group2 = value(~myopia);
+
+                group1(isnan(group1))=[];
+                group2(isnan(group2))=[];
+
+                if isempty(group1) || isempty(group2)
+                    pset(sam_index) = NaN;
+                else
+                    pset(sam_index) = ranksum(group1,group2);
+                end
+
+            end
+%             pset(isnan(pset))=[];
+%             histogram(pset);
+            p = median(pset,'omitnan');
+
+        end
+
+        function [auc,ci] = bootstrapping_AUC(self,os,od,B)
+            
+            ex = (isnan(os(:,1))&isnan(od(:,1)));
+            ex = [ex ex];
+            os(ex)=[];
+            od(ex)=[];
+            os = reshape(os,[],2);
+            od = reshape(od,[],2);
+            
+            N = length(os(:,1));
+            AUCset = zeros(1,B);
+            for sam_index = 1:B
+                sam_sub = randi(N,N,1);
+                set_os = os(sam_sub,:);
+                set_od = od(sam_sub,:);
+
+
+                sam_eye = randi(2,N,1);
+                ostest = os(:,1);
+                is()
+
+
+
+                sam_eye2 = [sam_eye sam_eye];
+                
+                
+
+
+
+                set = set_os;
+                
+                sam_eye2(isnan(set_od(sam_eye2==2)))=1;
+
+                set(sam_eye2==2) = set_od(sam_eye2==2);
+
+                [X,Y,T,AUCset(sam_index)] = perfcurve(set(:,1),set(:,2),1);
+
+
+            end
+%             pset(isnan(pset))=[];
+%             histogram(pset);
+            auc = median(AUCset,'omitnan');
+            ci(1) = quantile(AUCset,0.025);
+            ci(2) = quantile(AUCset,0.975);
+        end
+
+
+        function [r,p,b] = linear_regression(self,data)
+           
+            aaa = fitlm(data(:,1),data(:,2));
+            b = aaa.Coefficients.Estimate(2);
+            r = sqrt(aaa.Rsquared.Ordinary).*sign(b);
+            p = aaa.Coefficients.pValue(2);
+            
+
+        end
+
+
+
+
+    end
+end

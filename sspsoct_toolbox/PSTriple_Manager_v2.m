@@ -107,13 +107,15 @@ classdef PSTriple_Manager_v2 < handle
 %             x2 = I2./cEst;
 %             x3 = I3./cEst;
 
-%             Msub = cat(1,S1,S2,S3);   
-%             aaa = det3x3(Msub);
+             Msub = cat(1,S1,S2,S3);   
+             ddet = det3x3(Msub);
 
             ddet = S1(1,:).*S2(2,:).*S3(3,:) + S1(2,:).*S2(3,:).*S3(1,:) + S1(3,:).*S2(1,:).*S3(2,:) - S1(3,:).*S2(2,:).*S3(1,:) - S1(1,:).*S2(3,:).*S3(2,:) - S1(2,:).*S2(1,:).*S3(3,:);
-            cha = sum(x,1)/2 - sqrt(abs(sum(x,1).^2-2*sum(x.^2,1)-2))/2;
-            cha2 = sum(x,1)/2 + sqrt(abs(sum(x,1).^2-2*sum(x.^2,1)-2))/2;
-            cha(ddet<0) = cha2(ddet<0);
+%            cha = sum(x,1)/2 - sqrt(abs(sum(x,1).^2-2*sum(x.^2,1)-2))/2;
+%            cha2 = sum(x,1)/2 + sqrt(abs(sum(x,1).^2-2*sum(x.^2,1)-2))/2;
+%            cha(ddet<0) = cha2(ddet<0);
+
+            cha = (sum(x,1)-ddet)/2;
             
             cha(cha<=1) = 1.0001;
             % normalized a vector

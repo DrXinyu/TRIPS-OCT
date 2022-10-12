@@ -1,7 +1,7 @@
 Run TRIPS_Mueller_reconstruction.m to evaluate the code for TRIPS-OCT Mueller matrix reconstruction.
 Run TRIPS_PMD_and_symmetrization.m to evaluate the code for spectral binning to mitigate PMD and recover symmetry.
 
-Detailed fundtions in comments.
+Detailed funtions in comments.
 
 Data: 
 One typical guinea pig retina frame in-vivo

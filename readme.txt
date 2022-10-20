@@ -1,3 +1,7 @@
+Updated on 20 Oct.
+Fix the bugs 1) ddet computation should be comment. 2) unwrap optix axis is not on.
+
+
 Run TRIPS_Mueller_reconstruction.m to evaluate the code for TRIPS-OCT Mueller matrix reconstruction.
 Run TRIPS_PMD_and_symmetrization.m to evaluate the code for spectral binning to mitigate PMD and recover symmetry.
 

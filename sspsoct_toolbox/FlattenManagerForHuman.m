@@ -114,7 +114,7 @@ classdef FlattenManagerForHuman < handle
             %mask = (snr>1.7)&(dop>0.4);
             
             
-            mask = (snr>1.7)&(dop>0.3); % this is used for most data
+            mask = (snr>2.5)&(dop>0.5); % this is used for most data
 %             %mask = ((20*log10(snr))>1.4)&(dop>0.6);  % I cannot remember
 %             %what is this used
 %             SE = strel('disk',15);

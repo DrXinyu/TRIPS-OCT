@@ -707,16 +707,8 @@ classdef PSTriple_Manager_v2 < handle
             
             
             
-            %[surfrf,surfdf] = self.unwrapRetDiatSurf(surfrf,surfdf,dopmask);
+            [surfrf,surfdf] = self.unwrapRetDiatSurf(surfrf,surfdf,dopmask);
             
-            % I tried to unwrap, not working
-                                %%%%%%%%%%%%%%%%%
-                    %             ret = ret;
-                    %             thit = sqrt(dot(ret,ret,1));
-                    %             thit_f = medfilt1(thit,5,[],2);
-                    %             ret = (thit_f./thit).*ret;
-                    %            ret = self.layer_rotV_align(ret,dopmask);
-                                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             % reconstruct the Mueller matrix
             

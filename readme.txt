@@ -1,6 +1,7 @@
-Updated on 20 Oct.
+Updated on 15 June 2023.
 Fix the bugs 1) ddet computation should be comment. 2) unwrap optix axis is not on.
 
+This is code for image reconstruction using triple input polarization sensitive optical coherence tomography, decribed in a paper titled "Posterior scleral birefringence measured by triple-input polarization-sensitive imaging as a biomarker of myopia progression" published on Nature Biomedical Engineering, https://doi.org/10.1038/s41551-023-01062-w
 
 Run TRIPS_Mueller_reconstruction.m to evaluate the code for TRIPS-OCT Mueller matrix reconstruction.
 Run TRIPS_PMD_and_symmetrization.m to evaluate the code for spectral binning to mitigate PMD and recover symmetry.
